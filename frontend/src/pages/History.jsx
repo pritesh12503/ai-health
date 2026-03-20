@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { triageService, prescriptionService } from '../src/services/api'
+import { triageService, prescriptionService } from '../services/api'
 import { Activity, Pill, Clock, ChevronRight, Filter } from 'lucide-react'
 
 const riskBadge = { URGENT: 'badge-urgent', HIGH: 'badge-high', MEDIUM: 'badge-medium', LOW: 'badge-low' }
@@ -51,8 +51,8 @@ export default function History() {
               key={f}
               onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${filter === f
-                  ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30'
-                  : 'text-slate-500 hover:text-slate-300 border border-transparent'
+                ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30'
+                : 'text-slate-500 hover:text-slate-300 border border-transparent'
                 }`}
             >
               {f === 'all' ? 'All' : f === 'triage' ? 'Symptom Checks' : 'Prescriptions'}

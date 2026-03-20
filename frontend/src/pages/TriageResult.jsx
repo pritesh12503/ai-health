@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
-import { triageService } from '../src/services/api'
+import { triageService } from '../services/api'
 import { AlertTriangle, CheckCircle, RefreshCw, ChevronRight, Info } from 'lucide-react'
 
 const RISK_CONFIG = {

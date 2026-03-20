@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useLocation, Link } from 'react-router-dom'
-import { prescriptionService } from '../src/services/api'
+import { prescriptionService } from '../services/api'
 import { Pill, AlertTriangle, RefreshCw, ChevronRight, Info } from 'lucide-react'
 
 export default function PrescriptionResult() {

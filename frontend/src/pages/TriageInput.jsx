@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { triageService } from '../src/services/api'
+import { triageService } from '../services/api'
 import { Activity, AlertTriangle, Send } from 'lucide-react'
 
 const EXAMPLES = [

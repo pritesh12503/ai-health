@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useAuth } from '../src/context/AuthContext'
-import { userService } from '../src/services/api'
+import { useAuth } from '../context/AuthContext'
+import { userService } from '../services/api'
 import { User, Lock, CheckCircle } from 'lucide-react'
 
 export default function Profile() {

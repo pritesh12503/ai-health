@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../src/context/AuthContext'
-import { userService } from '../src/services/api'
+import { useAuth } from '../context/AuthContext'
+import { userService } from '../services/api'
 import { Activity, Pill, Clock, ArrowRight, TrendingUp } from 'lucide-react'
 
 const riskColors = {

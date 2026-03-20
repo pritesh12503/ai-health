@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../frontend/context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 import { Activity, LogOut, User, Clock, Home } from 'lucide-react'
 
 export default function Navbar() {
@@ -32,8 +32,8 @@ export default function Navbar() {
               <Link
                 to="/dashboard"
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/dashboard')
-                    ? 'bg-teal-500/15 text-teal-400'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-teal-500/15 text-teal-400'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                   }`}
               >
                 <Home className="w-4 h-4" />
@@ -42,8 +42,8 @@ export default function Navbar() {
               <Link
                 to="/triage"
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/triage')
-                    ? 'bg-teal-500/15 text-teal-400'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-teal-500/15 text-teal-400'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                   }`}
               >
                 <Activity className="w-4 h-4" />
@@ -52,8 +52,8 @@ export default function Navbar() {
               <Link
                 to="/prescription"
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/prescription')
-                    ? 'bg-teal-500/15 text-teal-400'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-teal-500/15 text-teal-400'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                   }`}
               >
                 <span className="text-sm">💊</span>
@@ -62,8 +62,8 @@ export default function Navbar() {
               <Link
                 to="/history"
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/history')
-                    ? 'bg-teal-500/15 text-teal-400'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-teal-500/15 text-teal-400'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                   }`}
               >
                 <Clock className="w-4 h-4" />
