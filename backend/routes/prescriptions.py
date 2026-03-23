@@ -9,7 +9,8 @@ from typing import List
 
 router = APIRouter(prefix="/prescriptions", tags=["prescriptions"])
 
-USE_MOCK = True  # Set to False once ML service is ready
+USE_MOCK = False
+ML_SERVICE_URL = "http://localhost:8003"
 
 
 @router.post("/explain", response_model=PrescriptionResponse, status_code=201)

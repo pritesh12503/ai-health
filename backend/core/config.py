@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "changeme-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
-    ML_SERVICE_URL: str = "http://localhost:8001"
+    ML_SERVICE_URL: str = "http://localhost:8003"
     RATE_LIMIT_PER_MINUTE: int = 30
 
     class Config:

@@ -6,13 +6,16 @@ Expected ML service endpoints:
   POST /ml/prescription  { prescription_text: str } → { medications: [...] }
 """
 
+
 import httpx
 from core.config import settings
 
-
 async def call_triage_ml(symptoms: str) -> dict:
-    """Call the ML service for symptom triage analysis."""
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    transport = httpx.AsyncHTTPTransport(proxy=None)
+    async with httpx.AsyncClient(
+        timeout=60.0,
+        transport=transport
+    ) as client:
         response = await client.post(
             f"{settings.ML_SERVICE_URL}/ml/triage",
             json={"symptoms": symptoms}
@@ -20,10 +23,12 @@ async def call_triage_ml(symptoms: str) -> dict:
         response.raise_for_status()
         return response.json()
 
-
 async def call_prescription_ml(prescription_text: str) -> dict:
-    """Call the ML service for prescription explanation."""
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    transport = httpx.AsyncHTTPTransport(proxy=None)
+    async with httpx.AsyncClient(
+        timeout=60.0,
+        transport=transport
+    ) as client:
         response = await client.post(
             f"{settings.ML_SERVICE_URL}/ml/prescription",
             json={"prescription_text": prescription_text}

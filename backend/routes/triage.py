@@ -9,7 +9,8 @@ from typing import List
 
 router = APIRouter(prefix="/triage", tags=["triage"])
 
-USE_MOCK = True  # Set to False once ML service is ready
+USE_MOCK = False
+ML_SERVICE_URL = "http://localhost:8003"
 
 
 @router.post("", response_model=TriageResponse, status_code=201)
