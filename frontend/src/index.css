@@ -2,86 +2,317 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── DARK MODE ───────────────────────────────────────────────────── */
+:root,
+.dark {
+  --bg: #020617;
+  --surface: #0f172a;
+  --card: #1e293b;
+  --card-hover: #263548;
+  --border: #334155;
+  --text: #f1f5f9;
+  --text-sub: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+  --accent: #14b8a6;
+  --accent-hover: #0d9488;
+  --accent-bg: rgba(20, 184, 166, 0.15);
+  --accent-border: rgba(20, 184, 166, 0.35);
+}
+
+/* ── LIGHT MODE ──────────────────────────────────────────────────── */
+.light {
+  --bg: #f0f9f8;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f8fffe;
+  --border: #d1e9e6;
+  --text: #0c1f1e;
+  --text-sub: #1e3a38;
+  --text-muted: #2d6a65;
+  --text-faint: #5a9e99;
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-bg: rgba(13, 148, 136, 0.1);
+  --accent-border: rgba(13, 148, 136, 0.3);
+}
+
 @layer base {
   * {
     box-sizing: border-box;
   }
 
+  html {
+    transition: background-color 0.3s ease;
+  }
+
   body {
-    @apply bg-slate-950 text-slate-100 font-body antialiased;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+  }
+
+  .dark body {
     background-image:
       radial-gradient(ellipse 80% 50% at 50% -20%, rgba(20, 184, 166, 0.12), transparent),
       radial-gradient(ellipse 60% 40% at 80% 80%, rgba(13, 148, 136, 0.06), transparent);
     background-attachment: fixed;
   }
 
-  h1, h2, h3 {
-    @apply font-display;
+  .light body {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(13, 148, 136, 0.07), transparent),
+      radial-gradient(ellipse 50% 40% at 90% 90%, rgba(20, 184, 166, 0.04), transparent);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Fraunces', serif;
+    color: var(--text);
+  }
+
+  p {
+    color: var(--text-sub);
+  }
+
+  a {
+    color: inherit;
   }
 }
 
 @layer components {
+
+  /* ── Cards ── */
   .card {
-    @apply bg-slate-900/60 border border-slate-800/60 rounded-2xl backdrop-blur-sm;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    transition: background-color 0.3s ease, border-color 0.2s ease;
   }
 
+  .card:hover {
+    background-color: var(--card-hover);
+  }
+
+  /* ── Buttons ── */
   .btn-primary {
-    @apply bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25 active:scale-95;
+    @apply font-semibold px-6 py-3 rounded-xl transition-all duration-200 active:scale-95;
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
   }
 
   .btn-secondary {
-    @apply bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium px-6 py-3 rounded-xl transition-all duration-200 border border-slate-700;
+    @apply font-medium px-6 py-3 rounded-xl transition-all duration-200;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
   }
 
   .btn-ghost {
-    @apply text-slate-400 hover:text-teal-400 font-medium px-4 py-2 rounded-lg transition-colors duration-200;
+    @apply font-medium px-4 py-2 rounded-lg transition-colors duration-200;
+    color: var(--text-muted);
   }
 
+  .btn-ghost:hover {
+    color: var(--accent);
+  }
+
+  /* ── Inputs ── */
   .input-field {
-    @apply w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500
-           focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20
-           transition-all duration-200 font-body;
+    width: 100%;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    @apply rounded-xl px-4 py-3 outline-none transition-all duration-200;
   }
 
+  .input-field::placeholder {
+    color: var(--text-faint);
+  }
+
+  .input-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+
+  /* ── Label ── */
   .label {
-    @apply block text-sm font-medium text-slate-400 mb-2;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
   }
 
+  /* ── Navbar ── */
+  .navbar {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* ── Text utilities using CSS vars ── */
+  .t-primary {
+    color: var(--text);
+  }
+
+  .t-sub {
+    color: var(--text-sub);
+  }
+
+  .t-muted {
+    color: var(--text-muted);
+  }
+
+  .t-faint {
+    color: var(--text-faint);
+  }
+
+  .t-accent {
+    color: var(--accent);
+  }
+
+  /* ── Accent bg ── */
+  .accent-bg {
+    background-color: var(--accent-bg);
+    border-color: var(--accent-border);
+  }
+
+  /* ── Badges ── */
   .badge-urgent {
-    @apply bg-red-500/15 text-red-400 border border-red-500/30 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center bg-red-500/15 text-red-500 border border-red-400/40 px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
   }
 
   .badge-high {
-    @apply bg-orange-500/15 text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center bg-orange-500/15 text-orange-500 border border-orange-400/40 px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
   }
 
   .badge-medium {
-    @apply bg-yellow-500/15 text-yellow-400 border border-yellow-500/30 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+    background: rgba(202, 138, 4, 0.12);
+    color: #a16207;
+    border: 1px solid rgba(202, 138, 4, 0.35);
   }
 
   .badge-low {
-    @apply bg-teal-500/15 text-teal-400 border border-teal-500/30 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+  }
+
+  /* Light mode badge overrides for better contrast */
+  .light .badge-medium {
+    color: #854d0e;
+    background: rgba(202, 138, 4, 0.15);
+  }
+
+  .light .badge-urgent {
+    color: #b91c1c;
+  }
+
+  .light .badge-high {
+    color: #c2410c;
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { @apply bg-slate-900; }
-::-webkit-scrollbar-thumb { @apply bg-slate-700 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+}
 
-/* Animations */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}
+
+/* ── Animations ── */
 .animate-fade-up {
   animation: fadeUp 0.5s ease forwards;
   opacity: 0;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+
+/* ── Force text colors for Tailwind slate classes in light mode ── */
+.light .text-slate-100,
+.light .text-slate-200 {
+  color: var(--text) !important;
+}
+
+.light .text-slate-300,
+.light .text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+.light .text-slate-500,
+.light .text-slate-600 {
+  color: var(--text-faint) !important;
+}
+
+.light .bg-slate-900,
+.light .bg-slate-800 {
+  background-color: var(--card) !important;
+}
+
+.light .bg-slate-800\/40,
+.light .bg-slate-800\/60 {
+  background-color: rgba(13, 148, 136, 0.06) !important;
+}
+
+.light .border-slate-700,
+.light .border-slate-800 {
+  border-color: var(--border) !important;
+}
+
+.light .text-white {
+  color: var(--text) !important;
+}

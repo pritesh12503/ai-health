@@ -72,53 +72,119 @@ export default function TriageResult() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 space-y-5">
 
-      {/* Risk Level Banner */}
-      <div className={`card p-5 border-2 ${config.color} animate-fade-up`}>
+      {/* Risk Level */}
+      <div
+        className="card p-5 animate-fade-up"
+        style={{ border: '1px solid var(--accent-border)', background: 'var(--accent-bg)' }}
+      >
         <div className="flex items-center gap-3 mb-3">
           {config.icon}
+
           <div>
-            <span className={`text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded-full ${config.badge}`}>
+            <span
+              className="text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
+              style={{
+                background: 'var(--card)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-muted)'
+              }}
+            >
               {result.risk_level}
             </span>
-            <h2 className="font-display text-lg font-semibold text-white mt-1">{config.label}</h2>
+
+            <h2 className="font-display text-lg font-semibold mt-1" style={{ color: 'var(--text)' }}>
+              {config.label}
+            </h2>
           </div>
         </div>
-        <p className="text-slate-300 text-sm leading-relaxed">{config.message}</p>
+
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+          {config.message}
+        </p>
       </div>
 
-      {/* Your Symptoms */}
-      <div className="card p-5 animate-fade-up stagger-1">
-        <h3 className="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3">Symptoms Analyzed</h3>
-        <p className="text-slate-300 text-sm leading-relaxed italic">"{result.symptoms}"</p>
+      {/* Symptoms */}
+      <div className="card p-5">
+        <h3 className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
+          Symptoms Analyzed
+        </h3>
+
+        <p className="text-sm leading-relaxed italic" style={{ color: 'var(--text)' }}>
+          "{result.symptoms}"
+        </p>
       </div>
 
-      {/* Possible Conditions */}
+      {/* Conditions */}
       {result.conditions?.length > 0 && (
-        <div className="card p-5 animate-fade-up stagger-2">
-          <h3 className="text-xs font-mono text-slate-500 uppercase tracking-wider mb-4">Possible Conditions</h3>
+        <div className="card p-5">
+          <h3 className="text-xs font-mono uppercase tracking-wider mb-4" style={{ color: 'var(--text-muted)' }}>
+            Possible Conditions
+          </h3>
+
           <div className="space-y-3">
             {result.conditions.map((cond, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 bg-slate-800/40 rounded-xl">
-                <span className="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-xs flex items-center justify-center font-mono flex-shrink-0 mt-0.5">
-                  {i + 1}
-                </span>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <p className="text-slate-200 text-sm font-medium">{cond.name}</p>
-                    {cond.confidence && (
-                      <span className="text-xs font-mono text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded-full">
-                        {Math.round(cond.confidence * 100)}% match
-                      </span>
+              <div
+                key={i}
+                className="p-3 rounded-xl"
+                style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
+              >
+                <div className="flex items-start gap-3">
+
+                  <span
+                    className="w-6 h-6 rounded-full text-xs flex items-center justify-center font-mono mt-0.5"
+                    style={{
+                      background: 'var(--accent-bg)',
+                      color: 'var(--accent)',
+                      border: '1px solid var(--accent-border)'
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>
+                        {cond.name}
+                      </p>
+
+                      {cond.confidence && (
+                        <span
+                          className="text-xs font-mono px-2 py-0.5 rounded-full"
+                          style={{
+                            background: 'var(--accent-bg)',
+                            color: 'var(--accent)',
+                            border: '1px solid var(--accent-border)'
+                          }}
+                        >
+                          {Math.round(cond.confidence * 100)}% match
+                        </span>
+                      )}
+                    </div>
+
+                    {cond.explanation && (
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {cond.explanation}
+                      </p>
+                    )}
+
+                    {cond.contributing_symptoms?.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {cond.contributing_symptoms.map((s, j) => (
+                          <span
+                            key={j}
+                            className="text-xs px-2 py-0.5 rounded-full"
+                            style={{
+                              background: 'var(--card)',
+                              border: '1px solid var(--border)',
+                              color: 'var(--text-muted)'
+                            }}
+                          >
+                            {s}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
-                  {cond.explanation && <p className="text-slate-400 text-xs leading-relaxed">{cond.explanation}</p>}
-                  {cond.contributing_symptoms?.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mt-2">
-                      {cond.contributing_symptoms.map((s, j) => (
-                        <span key={j} className="text-xs bg-slate-700/60 text-slate-400 px-2 py-0.5 rounded-full">{s}</span>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
@@ -126,37 +192,54 @@ export default function TriageResult() {
         </div>
       )}
 
-      {/* Home Care Advice */}
+      {/* Home Care */}
       {result.home_care && (
-        <div className="card p-5 animate-fade-up stagger-3">
-          <h3 className="text-xs font-mono text-slate-500 uppercase tracking-wider mb-3">Home Care Advice</h3>
-          <p className="text-slate-300 text-sm leading-relaxed">{result.home_care}</p>
+        <div className="card p-5">
+          <h3 className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
+            Home Care Advice
+          </h3>
+
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>
+            {result.home_care}
+          </p>
         </div>
       )}
 
       {/* Doctor Recommendation */}
       {result.doctor_recommendation && (
-        <div className="card p-5 border border-teal-500/20 animate-fade-up stagger-4">
-          <h3 className="text-xs font-mono text-teal-500/70 uppercase tracking-wider mb-2">Doctor Recommendation</h3>
-          <p className="text-slate-300 text-sm leading-relaxed">{result.doctor_recommendation}</p>
+        <div
+          className="card p-5"
+          style={{ border: '1px solid var(--accent-border)' }}
+        >
+          <h3 className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--accent)' }}>
+            Doctor Recommendation
+          </h3>
+
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>
+            {result.doctor_recommendation}
+          </p>
         </div>
       )}
 
       {/* Actions */}
-      <div className="flex gap-3 animate-fade-up">
+      <div className="flex gap-3">
         <Link to="/triage" className="btn-secondary flex-1 text-center text-sm">
           <RefreshCw className="w-4 h-4 inline mr-2" />
           New Check
         </Link>
+
         <Link to="/history" className="btn-ghost text-sm flex items-center gap-1">
           View History <ChevronRight className="w-4 h-4" />
         </Link>
       </div>
 
       {/* Disclaimer */}
-      <div className="p-4 bg-slate-900/50 border border-slate-800 rounded-xl">
-        <p className="text-slate-500 text-xs leading-relaxed">
-          ⚠️ This analysis is for educational purposes only. It does not constitute a medical diagnosis. Always consult a qualified healthcare professional for proper diagnosis and treatment.
+      <div
+        className="p-4 rounded-xl"
+        style={{ background: 'var(--accent-bg)', border: '1px solid var(--accent-border)' }}
+      >
+        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+          ⚠️ <strong style={{ color: 'var(--text)' }}>Medical Disclaimer:</strong> This analysis is for educational purposes only and does not replace professional consultation.
         </p>
       </div>
     </div>
