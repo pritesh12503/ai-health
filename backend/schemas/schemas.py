@@ -114,3 +114,19 @@ class DashboardResponse(BaseModel):
     triage_count: int
     prescription_count: int
     recent: List[DashboardItem]
+
+# ── Reminders ─────────────────────────────────────────────────────────────────
+
+class ReminderRequest(BaseModel):
+    medication_name: str
+    dose_times: List[str]   # e.g. ["08:00", "14:00", "20:00"]
+
+class ReminderResponse(BaseModel):
+    id: int
+    medication_name: str
+    dose_times: List[str]
+    is_active: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

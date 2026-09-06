@@ -5,23 +5,40 @@ Expected ML service endpoints:
   POST /ml/triage       { symptoms: str } → { risk_level, conditions, home_care, doctor_recommendation }
   POST /ml/prescription  { prescription_text: str } → { medications: [...] }
 """
-
-
 import httpx
 from core.config import settings
 
-async def call_triage_ml(symptoms: str) -> dict:
-    transport = httpx.AsyncHTTPTransport(proxy=None)
-    async with httpx.AsyncClient(
-        timeout=60.0,
-        transport=transport
-    ) as client:
+async def call_ocr_ml(image_base64: str):
+    async with httpx.AsyncClient() as client:
         response = await client.post(
-            f"{settings.ML_SERVICE_URL}/ml/triage",
-            json={"symptoms": symptoms}
+            f"{settings.ML_SERVICE_URL}/ml/ocr",
+            json={"image_base64": image_base64}
         )
         response.raise_for_status()
         return response.json()
+async def call_triage_ml(symptoms: str, history: str) -> dict:
+    try:
+        transport = httpx.AsyncHTTPTransport(proxy=None)
+
+        async with httpx.AsyncClient(timeout=60.0, transport=transport) as client:
+            response = await client.post(
+                f"{settings.ML_SERVICE_URL}/ml/triage",
+                json={
+                    "symptoms": symptoms,
+                    "history": history
+                }
+            )
+
+            print("STATUS:", response.status_code)
+            print("RESPONSE TEXT:", response.text)  # 🔥 ADD THIS
+
+            response.raise_for_status()
+            return response.json()
+
+    except Exception as e:
+        print("ML ERROR:", e)
+        return None   
+
 
 async def call_prescription_ml(prescription_text: str) -> dict:
     transport = httpx.AsyncHTTPTransport(proxy=None)

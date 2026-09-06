@@ -5,12 +5,17 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 from core.database import engine, Base
-from routes import auth, triage, prescriptions, users
+from routes import auth, triage, prescriptions, users, reminders
+from routes import patients   # NEW
 
-# Create tables
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+# Create tables (includes new patient_profiles table automatically)
 Base.metadata.create_all(bind=engine)
 
-# Rate limiter
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
@@ -22,7 +27,6 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://localhost:3000"],
@@ -36,6 +40,8 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(triage.router, prefix="/api")
 app.include_router(prescriptions.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
+app.include_router(reminders.router, prefix="/api")
+app.include_router(patients.router, prefix="/api")   # NEW
 
 
 @app.get("/")
